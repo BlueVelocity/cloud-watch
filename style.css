@@ -1,3 +1,10 @@
+/* FONT IMPORT */
+@font-face {
+  font-family: 'Roboto';
+  src:  url('./fonts/Roboto-Regular.woff') format('woff'),
+        url('m./fonts/Roboto-Regular.woff2') format('woff2');
+}
+
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
@@ -48,17 +55,25 @@ table {
 }
 
 /* USER STYLING */
+:root {
+  font-size: 16px;
+  font-family: 'Roboto';
+}
 
 html {
   width: 100vw;
   height: 100vh;
   background-color: #334155;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 body {
-  width: 100%;
-  height: 100%;
+  width: 75%;
+  height: 75%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -68,4 +83,17 @@ body > * {
   flex: 1;
 }
 
+h1 {
+  font-size: 3rem
+}
 
+.forecast {
+  display: grid;
+  grid-template-rows: 100%;
+  grid-template-columns: repeat(3, 20rem);
+  gap: 1rem
+}
+
+.forecast > * {
+  background-color: red;
+}

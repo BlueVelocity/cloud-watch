@@ -7,13 +7,18 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <label for="city-name">City Name:</label>
-  <input type="text" id="city-name">
-  <button type="button" id="city-search-btn">Enter</button>
-  
-  <p id="city-name"></p>
-  <p class="forecast-widget"></p>
-  <p class="forecast-widget"></p>
-  <p class="forecast-widget"></p>
+  <h1>Weather Report</h1>
+  <div>
+    <label for="city-name">City Search:</label>
+    <input type="text" id="city-name">
+    <button type="button" id="city-search-btn">Enter</button>
+  </div>
+  <p id="city-name">[City Name]</p>
+  <div class="forecast">
+      <p class="forecast-widget">Pen</p>
+      <p class="forecast-widget">Pen</p>
+      <p class="forecast-widget">Pen</p>
+   </div>
+   <p id="error">[Error Report]</p>
 </body>
 </html>
