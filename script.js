@@ -5,8 +5,8 @@ const loadingBar = document.querySelector('.loading-bar')
 const forecastLength = "3"
 
 citySearchButton.addEventListener('click', () => {
-  const cityInput = document.getElementById('city-name').value
-  updateForecasts(cityInput)
+  const userInput = document.getElementById('city-name').value
+  updateForecasts(userInput)
 })
 
 async function updateForecasts(cityName) {
