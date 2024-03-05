@@ -55,7 +55,6 @@ function extractLocationData(rawData) {
 
 function extractForecastData(rawData) {
   const weatherDataSet = rawData.forecast.forecastday
-  console.log(rawData)
 
   const processedData = weatherDataSet.map( dailyForecastData => {
     const date = dateFns.format(new Date(dailyForecastData.date), 'MMM DD, YYYY')
