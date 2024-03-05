@@ -134,6 +134,11 @@ button:active {
   background-color: #475569;
   border-radius: 1rem;
   padding: 10px;
+  transition: transform 150ms ease-in-out
+}
+
+.forecast > *.bounce {
+  transform: translate(0px, -20px)
 }
 
 .forecast img {

@@ -20,6 +20,8 @@ async function updateForecasts(cityName) {
 
     forecastWidgetContainers.forEach((widgetContainer, index) => {
       widgetContainer.innerHTML = ''
+      setTimeout(() => widgetContainer.classList.add("bounce"), index * 50)
+      setTimeout(() => widgetContainer.classList.remove("bounce"), 200 + (index * 50))
       widgetContainer.appendChild(generateForecastWidget(extractedData[0][index]))
     })
   } catch (err){
