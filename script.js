@@ -31,7 +31,9 @@ async function updateForecasts(cityName) {
 
 async function getWeatherForecastData(location, numOfDays) {
   try {
-    const response = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=e37177f58ac44c8e92442933242702&q=${location}&days=${numOfDays}`)
+    const response = await fetch(`//api.weatherapi.com/v1/forecast.json?key=e37177f58ac44c8e92442933242702&q=${location}&days=${numOfDays}`, {
+      mode: 'cors'
+    })
     if (!response.ok){
       console.log(`HTTP Error!, Status: ${response.status}`)
       alert("Location unknown!")
