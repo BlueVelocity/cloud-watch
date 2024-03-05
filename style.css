@@ -88,12 +88,19 @@ h1 {
 }
 
 .forecast {
+  min-height: 13rem;
   display: grid;
   grid-template-rows: 100%;
-  grid-template-columns: repeat(3, 20rem);
+  grid-template-columns: repeat(3, min(13rem, 28vw));
   gap: 1rem
 }
 
 .forecast > * {
   background-color: red;
+  text-overflow: wrap;
+  padding: 1rem;
+}
+
+.forecast img {
+  max-width: 5rem;
 }
