@@ -36,31 +36,41 @@ async function getWeatherForecastData(location, numOfDays) {
 
 function extractForecastData(rawData) {
   const targetDataSet = rawData.forecast.forecastday
+  console.log(targetDataSet)
 
   const processedData = targetDataSet.map( dailyForecastData => {
-    const date = dailyForecastData.date
+    const date = dateFns.format(new Date(dailyForecastData.date), 'MMM DD, YYYY')
     const conditions = dailyForecastData.day.condition.text
-    const conditionsImgCode = dailyForecastData.day.condition.code
-    const maxTemp = dailyForecastData.day.maxTemp_c
-    const minTemp = dailyForecastData.day.minTemp_c
-    const totalPrecip = dailyForecastData.day.totalPrecip_mm
+    const conditionsImgUrl = dailyForecastData.day.condition.icon
+    const maxTemp = dailyForecastData.day.maxtemp_c
+    const minTemp = dailyForecastData.day.mintemp_c
+    const totalPrecip = dailyForecastData.day.totalprecip_mm
 
-    return {date, conditions, conditionsImgCode, maxTemp, minTemp, totalPrecip}
+    return {date, conditions, conditionsImgUrl, maxTemp, minTemp, totalPrecip}
   }) 
 
   return processedData
 }
 
-
 function generateForecastWidget(dayWeatherData) {
   const widgetElement = document.createElement('div')
 
   const dateElement = document.createElement('p')
+  dateElement.textContent = dayWeatherData.date
 
   const conditionsText = document.createElement('p')
-  conditionsText.textContent = dayWeatherData.conditions;
+  conditionsText.textContent = dayWeatherData.conditions
 
-  [conditionsText].forEach(element => widgetElement.appendChild(element))
+  const tempElement = document.createElement('p')
+  tempElement.textContent = `${dayWeatherData.minTemp}℃ - ${dayWeatherData.maxTemp}℃`
+
+  const totalPrecipElement = document.createElement('p')
+  totalPrecipElement.textContent = `${dayWeatherData.totalPrecip}mm Total Precip.`
+
+  const weatherIcon = document.createElement('img')
+  weatherIcon.src = dayWeatherData.conditionsImgUrl;
+
+  [dateElement, conditionsText, tempElement, totalPrecipElement, weatherIcon].forEach(element => widgetElement.appendChild(element))
 
   return widgetElement
 }
