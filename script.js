@@ -1,4 +1,7 @@
 const citySearchButton = document.getElementById('city-search-btn')
+const forecastWidgetContainers = document.querySelectorAll('.forecast-container')
+const locationDisplay = document.getElementById('city-name-display')
+const loadingBar = document.querySelector('.loading-bar')
 const forecastLength = "3"
 
 citySearchButton.addEventListener('click', () => {
@@ -8,8 +11,9 @@ citySearchButton.addEventListener('click', () => {
 
 async function updateForecasts(cityName) {
   try {
-    const forecastWidgetContainers = document.querySelectorAll('.forecast-container')
+    loadingBar.classList.add('active')
     const weatherData = await getWeatherForecastData(cityName, forecastLength)
+    loadingBar.classList.remove("active")
     const extractedData = await Promise.all([await extractForecastData(weatherData), await extractLocationData(weatherData)])
 
     updateLocationDisplay(extractedData[1])
@@ -64,7 +68,6 @@ function extractForecastData(rawData) {
 }
 
 function updateLocationDisplay(locationData) {
-  const locationDisplay = document.getElementById('city-name-display')
   locationDisplay.textContent = ''
   locationDisplay.textContent = `${locationData.name}, ${locationData.country}`
 }

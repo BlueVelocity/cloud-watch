@@ -149,3 +149,13 @@ button:active {
   background-color: #94a3b8;
   border-radius: 1rem;
 }
+
+.loading-bar {
+  visibility: hidden;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.loading-bar.active {
+   visibility: visible; 
+}
