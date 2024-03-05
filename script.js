@@ -8,7 +8,7 @@ citySearchButton.addEventListener('click', () => {
 
 async function updateForecasts(cityName) {
   try {
-    const forecastWidgetContainers = document.querySelectorAll('.forecast-widget-container')
+    const forecastWidgetContainers = document.querySelectorAll('.forecast-container')
     const weatherData = await getWeatherForecastData(cityName, forecastLength)
     const forecastData = await extractForecastData(weatherData)
 
@@ -63,4 +63,8 @@ function generateForecastWidget(dayWeatherData) {
   [conditionsText].forEach(element => widgetElement.appendChild(element))
 
   return widgetElement
+}
+
+function resetWeatherWidgets() {
+  document.querySelectorAll('.forecast-container')
 }
