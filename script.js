@@ -10,10 +10,13 @@ async function updateForecasts(cityName) {
   try {
     const forecastWidgetContainers = document.querySelectorAll('.forecast-container')
     const weatherData = await getWeatherForecastData(cityName, forecastLength)
-    const forecastData = await extractForecastData(weatherData)
+    const extractedData = await Promise.all([await extractForecastData(weatherData), await extractLocationData(weatherData)])
+
+    updateLocationDisplay(extractedData[1])
 
     forecastWidgetContainers.forEach((widgetContainer, index) => {
-      widgetContainer.appendChild(generateForecastWidget(forecastData[index]))
+      widgetContainer.innerHTML = ''
+      widgetContainer.appendChild(generateForecastWidget(extractedData[0][index]))
     })
   } catch (err){
     console.log(err)
@@ -25,20 +28,28 @@ async function getWeatherForecastData(location, numOfDays) {
     const response = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=e37177f58ac44c8e92442933242702&q=${location}&days=${numOfDays}`)
     if (!response.ok){
       console.log(`HTTP Error!, Status: ${response.status}`)
+      alert("Location unknown!")
     } else {
       const data = await response.json()
       return data
     }
   } catch (err) {
-   console.log(err) 
+    console.log(err)
+    alert('Location Unkown')
   }
 }
 
-function extractForecastData(rawData) {
-  const targetDataSet = rawData.forecast.forecastday
-  console.log(targetDataSet)
+function extractLocationData(rawData) {
+  const locationData = rawData.location
 
-  const processedData = targetDataSet.map( dailyForecastData => {
+  return locationData
+}
+
+function extractForecastData(rawData) {
+  const weatherDataSet = rawData.forecast.forecastday
+  console.log(rawData)
+
+  const processedData = weatherDataSet.map( dailyForecastData => {
     const date = dateFns.format(new Date(dailyForecastData.date), 'MMM DD, YYYY')
     const conditions = dailyForecastData.day.condition.text
     const conditionsImgUrl = dailyForecastData.day.condition.icon
@@ -50,6 +61,12 @@ function extractForecastData(rawData) {
   }) 
 
   return processedData
+}
+
+function updateLocationDisplay(locationData) {
+  const locationDisplay = document.getElementById('city-name-display')
+  locationDisplay.textContent = ''
+  locationDisplay.textContent = `${locationData.name}, ${locationData.country}`
 }
 
 function generateForecastWidget(dayWeatherData) {
@@ -73,8 +90,4 @@ function generateForecastWidget(dayWeatherData) {
   [dateElement, conditionsText, tempElement, totalPrecipElement, weatherIcon].forEach(element => widgetElement.appendChild(element))
 
   return widgetElement
-}
-
-function resetWeatherWidgets() {
-  document.querySelectorAll('.forecast-container')
 }
